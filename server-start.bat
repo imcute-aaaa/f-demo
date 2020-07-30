@@ -1,1 +1,1 @@
-chmod 755 /f-demo/get.py
+chmod 755 /f-demo/login.html
