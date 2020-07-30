@@ -1,22 +1,26 @@
-
-# CGI处理模块
 import cgi, cgitb 
 
-# 创建 FieldStorage 的实例化
+
 form = cgi.FieldStorage() 
-
-# 获取数据
-site_name = form.getvalue('name')
-site_url  = form.getvalue('url')
-
-print ("Content-type:text/html")
-print ()
-print ("<html>")
-print ("<head>")
-print ("<meta charset=\"utf-8\">")
-print ("<title>菜鸟教程 CGI 测试实例</title>")
-print ("</head>")
-print ("<body>")
-print ("<h2>%s官网：%s</h2>" % (site_name, site_url))
-print ("</body>")
-print ("</html>")
+uname = form.getvalue('name')
+pword  = form.getvalue('url')
+with open('/f-demo/users/'+uname,'r') as k:
+	if pword==k.read():
+		login='Access!<script>document.cookie=\'username='+uname+';password='+pword+'\'</script>'
+	else:
+		login='Denied.Will create a new account.<script>document.cookie=\'username='+uname+';password='+pword+'\'</script>'
+if login != 'Access!<script>document.cookie=\'username='+uname+';password='+pword+'\'</script>':
+	with open('/f-demo/users/'+uname,'w') as k:
+		k.write(pword)
+		
+print("Content-type:text/html")
+print()
+print("<html>")
+print("<head>")
+print("<meta charset=\"utf-8\">")
+print("<title>%s</title>" % login)
+print("</head>")
+print("<body>")
+print("<h1>%s</h1>" % login)
+print("</body>")
+print("</html>")
